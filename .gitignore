@@ -21,6 +21,10 @@ data/processed/
 # Logs
 *.log
 
+# Database dumps
+*.dump
+*.sql.gz
+
 # OS
 .DS_Store
 Thumbs.db

@@ -196,14 +196,15 @@ DONUT_COLORS = ["#636EFA", "#EF553B", "#00CC96", "#AB63FA", "#FFA15A"]
 
 @st.cache_resource
 def get_engine():
-    url = (
-        f"postgresql+psycopg2://"
-        f"{os.getenv('DB_USER', 'postgres')}:"
-        f"{os.getenv('DB_PASSWORD', '')}@"
-        f"{os.getenv('DB_HOST', 'localhost')}:"
-        f"{os.getenv('DB_PORT', '5432')}/"
-        f"{os.getenv('DB_NAME', 'olist_dwh')}"
-    )
+    user     = os.getenv("DB_USER",     "postgres")
+    password = os.getenv("DB_PASSWORD", "")
+    host     = os.getenv("DB_HOST",     "localhost")
+    port     = os.getenv("DB_PORT",     "5432")
+    dbname   = os.getenv("DB_NAME",     "olist_dwh")
+    sslmode  = os.getenv("DB_SSLMODE",  "")
+
+    base = f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{dbname}"
+    url  = f"{base}?sslmode={sslmode}" if sslmode else base
     return create_engine(url, future=True)
 
 
